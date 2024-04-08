@@ -8,6 +8,11 @@
     "start": "parcel ./src/index.html ",
     "build": "parcel build ./src/index.html  --dist-dir ./dist"
   },
+  "scripts": {
+    "deploy": "vercel --prod",
+    "build-and-deploy": "pnpm run build && pnpm run deploy"
+  },
+  
   "keywords": [],
   "author": "",
   "license": "ISC",
