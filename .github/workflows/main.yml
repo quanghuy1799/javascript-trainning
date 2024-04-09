@@ -3,10 +3,10 @@ name: Deploy to Vercel
 on:
   push:
     branches:
-      - main  # Change this to your main branch name
+      - main  # Adjust to your main branch name
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -19,15 +19,11 @@ jobs:
           node-version: '20'
           cache: 'pnpm'
 
-      - name: Install PNPM
-        run: npm install -g pnpm
-
       - name: Install dependencies
-        working-directory: practice-two
-        run: |
-          pnpm install
-          pnpm run build
+        run: pnpm install --frozen-lockfile
+
+      - name: Build
+        run: pnpm build  # Adjust this command based on your project setup
 
       - name: Deploy to Vercel
-        working-directory: practice-two
-        run: vercel --prod --token ${{ secrets.VERCEL_TOKEN }}
+        run: npx vercel --prod --token ${{ secrets.VERCEL_TOKEN }}
