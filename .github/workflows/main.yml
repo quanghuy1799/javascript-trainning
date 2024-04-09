@@ -3,7 +3,7 @@ name: Deploy to Vercel
 on:
   push:
     branches:
-      - main  # Adjust to your main branch name
+      - main  # Change this to your main branch name
 
 jobs:
   deploy:
@@ -13,13 +13,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Setup Node.js and PNPM
+      - name: Setup Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '20'
-          cache: 'pnpm'
+          node-version: '14'
+
+      - name: Install PNPM
+        working-directory: practice-two
+        run: npm install -g pnpm
 
       - name: Install dependencies
+        working-directory: practice-two
         run: pnpm install --frozen-lockfile
 
       - name: Build
