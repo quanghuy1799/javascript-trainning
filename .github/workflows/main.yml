@@ -13,11 +13,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install Node.js and PNPM
+      - name: Setup Node.js and PNPM
         uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: '20'
           cache: 'pnpm'
+
+      - name: Install PNPM
+        run: npm install -g pnpm
 
       - name: Install dependencies
         working-directory: practice-two
