@@ -23,7 +23,9 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Build
+        working-directory: practice-two
         run: pnpm build  # Adjust this command based on your project setup
 
       - name: Deploy to Vercel
+        working-directory: practice-two
         run: npx vercel --prod --token ${{ secrets.VERCEL_TOKEN }}
