@@ -20,15 +20,15 @@ This is used to practice JavaScript skill.
 
 
 ## HOW TO START
-* Clone project : git clone git@github.com:quanghuy1799/javascript-practice.git
+* Clone project : git clone git@github.com:quanghuy1799/javascript-trainning.git
 
-* Move in practice folder: cd javascript-practice
+* Move in practice folder: cd practice-two
 
 * Checkout branch : git checkout main
 
-* Install packages: pnpm install express
+* Install packages: pnpm install
 
-* Start project: pnpm run start
+* Start project: pnpm start
 
 
 ## TECHNICAL STACK
