@@ -12,13 +12,10 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Install Vercel CLI
-        run: pnpm install --global vercel@latest
+        run: npm install --global vercel@latest
       - name: Pull Vercel Environment Information
-        working-directory: practice-two
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
       - name: Build Project Artifacts
-        working-directory: practice-two
         run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
       - name: Deploy Project Artifacts to Vercel
-        working-directory: practice-two
         run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
