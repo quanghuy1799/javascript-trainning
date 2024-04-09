@@ -20,9 +20,11 @@ jobs:
           cache: 'pnpm'
 
       - name: Install dependencies
+        working-directory: practice-two
         run: |
           pnpm install
           pnpm run build
 
       - name: Deploy to Vercel
+        working-directory: practice-two
         run: vercel --prod --token ${{ secrets.VERCEL_TOKEN }}
