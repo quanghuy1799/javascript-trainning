@@ -2,11 +2,12 @@ name: Deploy to Vercel
 
 on:
   push:
-    branches:
+    branches:   
       - main  # Change this to your main branch name
 
 jobs:
   deploy:
+    if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
 
     steps:
