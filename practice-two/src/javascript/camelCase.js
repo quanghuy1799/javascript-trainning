@@ -25,14 +25,4 @@ async function createNote(note) {
     }
 }
 
-// DELETE request
-async function deleteNote(noteId) {
-    try {
-        const response = await apiClient.get('/notes');
-        return response.data;
-    } catch (error) {
-        console.error(`Error deleting note with id ${noteId}:`, error);
-        throw error;
-    }
-}
 
