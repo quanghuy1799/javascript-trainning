@@ -1,9 +1,12 @@
 const axios = require('axios');
 
+const apiClient = axios.create({
+    baseURL: 'https://66149e8d2fc47b4cf27c99bc.mockapi.io'})
+
 // GET request
 async function getNotes() {
     try {
-        const response = await axios.get('https://66149e8d2fc47b4cf27c99bc.mockapi.io/notes');
+        const response = await apiClient.get('/notes');
         return response.data;
     } catch (error) {
         console.error('Error fetching notes:', error);
@@ -14,7 +17,7 @@ async function getNotes() {
 // POST request
 async function createNote(note) {
     try {
-        const response = await axios.post('https://66149e8d2fc47b4cf27c99bc.mockapi.io/notes', note);
+        const response = await apiClient.get('/notes');
         return response.data;
     } catch (error) {
         console.error('Error creating note:', error);
@@ -25,7 +28,7 @@ async function createNote(note) {
 // DELETE request
 async function deleteNote(noteId) {
     try {
-        const response = await axios.delete(`https://66149e8d2fc47b4cf27c99bc.mockapi.io/notes/${noteId}`);
+        const response = await apiClient.get('/notes');
         return response.data;
     } catch (error) {
         console.error(`Error deleting note with id ${noteId}:`, error);
