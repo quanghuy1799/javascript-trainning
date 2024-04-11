@@ -14,15 +14,5 @@ async function getNotes() {
     }
 }
 
-// POST request
-async function createNote(note) {
-    try {
-        const response = await apiClient.get('/notes');
-        return response.data;
-    } catch (error) {
-        console.error('Error creating note:', error);
-        throw error;
-    }
-}
 
 
