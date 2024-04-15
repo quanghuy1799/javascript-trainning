@@ -8,7 +8,8 @@
     "start": "parcel ./src/index.html ",
     "build": "parcel build ./src/index.html  --out-dir ./dist",
     "deploy": "vercel --prod",
-    "build-and-deploy": "pnpm run build && pnpm run deploy"
+    "build-and-deploy": "pnpm run build && pnpm run deploy",
+    "lint": "npx eslint ./src/**/*.js"
   },
   "keywords": [],
   "author": "",
@@ -20,17 +21,14 @@
   "devDependencies": {
     "@commitlint/cli": "^19.2.1",
     "@commitlint/config-conventional": "^19.1.0",
-    "@eslint/eslintrc": "^3.0.2",
     "@eslint/js": "^9.0.0",
     "cssnano": "^4.1.11",
     "eslint": "^9.0.0",
-    "eslint-config-airbnb-base": "^15.0.0",
-    "eslint-plugin-import": "^2.29.1",
     "globals": "^15.0.0",
     "husky": "^9.0.11",
     "parcel": "^2.12.0",
-    "pnpm": "^8.15.6",
     "postcss": "^8.4.38",
     "prettier": "^3.2.5"
-  }
+  },
+  "type": "module"
 }
