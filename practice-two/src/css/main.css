@@ -2,6 +2,11 @@ body{
   background: #edf1f5;
   margin-top:20px;
 }
+.nav-link.active {
+  background-color: #007bff ;
+  color: #fff;
+}
+
 .card {
   position: relative;
   display: flex;
@@ -69,7 +74,7 @@ body{
    border: 2px solid #2cabe3
 }
 
-.note-has-grid .single-note-item .category .category-important {
+.note-has-grid .single-note-item .category .category-travel {
    background-color: rgba(255, 80, 80, .5);
    border: 2px solid #ff5050
 }
@@ -106,15 +111,15 @@ body{
    display: inline-block
 }
 
-.note-has-grid .single-note-item.note-important .point {
+.note-has-grid .single-note-item.note-travel .point {
    color: rgba(255, 80, 80, .5)
 }
 
-.note-has-grid .single-note-item.note-important .side-stick {
+.note-has-grid .single-note-item.note-travel .side-stick {
    background-color: rgba(255, 80, 80, .5)
 }
 
-.note-has-grid .single-note-item.note-important .category .category-important {
+.note-has-grid .single-note-item.note-travel .category .category-travel {
    display: inline-block
 }
 
@@ -125,9 +130,9 @@ body{
 
 .note-has-grid .single-note-item.all-category.note-business .more-options,
 .note-has-grid .single-note-item.all-category.note-favourite.note-business .more-options,
-.note-has-grid .single-note-item.all-category.note-favourite.note-important .more-options,
+.note-has-grid .single-note-item.all-category.note-favourite.note-travel .more-options,
 .note-has-grid .single-note-item.all-category.note-favourite.note-social .more-options,
-.note-has-grid .single-note-item.all-category.note-important .more-options,
+.note-has-grid .single-note-item.all-category.note-travel .more-options,
 .note-has-grid .single-note-item.all-category.note-social .more-options {
    display: none
 }

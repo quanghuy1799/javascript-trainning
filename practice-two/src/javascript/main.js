@@ -1,19 +1,32 @@
-const getNotes = require('./api/getNotes');
-const createNote = require('./api/createNote');
-const deleteNote = require('./api/deleteNote');
+document.addEventListener("DOMContentLoaded", function() {
+  var categoryButtons = document.querySelectorAll('.note-link');
 
-(async () => {
-    try {
-        const notes = await getNotes();
-        console.log('Notes:', notes);
+  categoryButtons.forEach(function(button) {
+      button.addEventListener('click', function() {
+          categoryButtons.forEach(function(btn) {
+              btn.classList.remove('active');
+          });
 
-        const newNote = { text: 'New note' };
-        const createdNote = await createNote(newNote);
-        console.log('Created note:', createdNote);
+          this.classList.add('active');
 
-        const deletedNote = await deleteNote(createdNote.id);
-        console.log('Deleted note:', deletedNote);
-    } catch (error) {
-        console.error('An error occurred:', error);
-    }
-})();
+          var category = this.id.replace('note-', '');
+
+          var notes = document.querySelectorAll('.single-note-item');
+
+          if (category === 'all-category') {
+              notes.forEach(function(note) {
+                  note.style.display = 'block';
+              });
+          } else {
+              notes.forEach(function(note) {
+                  note.style.display = 'none';
+              });
+
+              var categoryNotes = document.querySelectorAll('.note-' + category);
+              categoryNotes.forEach(function(note) {
+                  note.style.display = 'block';
+              });
+          }
+      });
+  });
+});
