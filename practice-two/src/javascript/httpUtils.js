@@ -1,36 +1,47 @@
-const axios = require('axios');
+/* global fetch */
 
 const BASE_URL = 'https://66149e8d2fc47b4cf27c99bc.mockapi.io/notes';
 
+async function fetchData(url, options) {
+    return fetch(url, options)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .catch(error => {
+            throw error;
+        });
+}
+
 // GET request
-async function getNotes() {
-    try {
-        const response = await axios.get(BASE_URL);
-        return response.data;
-    } catch (error) {
-        console.error('Error fetching notes:', error);
-        throw error;
-    }
+function getNotes() {
+    return fetchData(BASE_URL);
 }
 
 // POST request
-async function createNote(note) {
-    try {
-        const response = await axios.post(BASE_URL, note);
-        return response.data;
-    } catch (error) {
-        console.error('Error creating note:', error);
-        throw error;
-    }
+function createNote(note) {
+    const requestOptions = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(note)
+    };
+    return fetchData(BASE_URL, requestOptions);
 }
 
 // DELETE request
-async function deleteNote(noteId) {
-    try {
-        const response = await axios.delete(`${BASE_URL}/${noteId}`);
-        return response.data;
-    } catch (error) {
-        console.error(`Error deleting note with id ${noteId}:`, error);
-        throw error;
-    }
+function deleteNote(noteId) {
+    const requestOptions = {
+        method: 'DELETE'
+    };
+    return fetchData(`${BASE_URL}/${noteId}`, requestOptions);
 }
+
+export default {
+    getNotes,
+    createNote,
+    deleteNote
+};
