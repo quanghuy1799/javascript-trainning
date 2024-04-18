@@ -10,14 +10,14 @@ window.onload = function() {
       notes.forEach(note => {
         const liElement = document.createElement('li');
 
-        liElement.textContent = note.title; // Thay đổi tùy thuộc vào cấu trúc của note
+        liElement.textContent = note.title; 
 
         ulElement.appendChild(liElement);
       });
     })
     .catch(error => {
       const errorElement = document.createElement('p');
-      errorElement.textContent = 'Có lỗi xảy ra khi lấy dữ liệu: ' + error.message;
+      errorElement.textContent = 'Error ' + error.message;
 
       document.body.appendChild(errorElement);
     });
