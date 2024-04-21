@@ -2,11 +2,10 @@
   "name": "practice-two",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "parcel ./src/index.html ",
-    "build": "parcel build ./src/index.html  --out-dir ./dist",
+    "build": "parcel build ./src/index.html  --dist-dir ./dist",
     "deploy": "vercel --prod",
     "build-and-deploy": "pnpm run build && pnpm run deploy",
     "lint": "npx eslint ./src/**/*.js"

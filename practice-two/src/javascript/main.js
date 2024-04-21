@@ -1,2 +1,2 @@
-import httpUtils from './utils/httpUtils'; 
-import getNotes from './modules/getNotes'; 
+import { getNotes } from './utils/httpUtils'; 
+import { renderAllNotes } from './modules/getNotes';
