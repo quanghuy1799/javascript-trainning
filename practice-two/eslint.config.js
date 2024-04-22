@@ -8,5 +8,9 @@ export default [
       "no-unused-vars": "warn",
       "no-undef": "warn",
     },
+    "env": {
+      "browser": true,
+      "es6": true
+  },
   },
 ];
