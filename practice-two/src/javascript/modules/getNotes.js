@@ -21,7 +21,7 @@ function renderNote(note) {
                             <div class="category">
                                 <div class="category-business"></div>
                                 <div class="category-social"></div>
-                                <div class="category-important"></div>
+                                <div class="category-travel"></div>
                                 <span class="more-options text-dark"><i class="icon-options-vertical"></i></span>
                             </div>
                         </a>
@@ -49,3 +49,8 @@ async function renderAllNotes() {
 }
 
 document.addEventListener('DOMContentLoaded', renderAllNotes);
+
+export {
+  renderNote,
+  renderAllNotes
+}
