@@ -8,7 +8,11 @@
     "build": "parcel build ./src/index.html  --dist-dir ./dist",
     "deploy": "vercel --prod",
     "build-and-deploy": "pnpm run build && pnpm run deploy",
-    "lint": "npx eslint ./src/**/*.js"
+    "lint": "npx eslint src",
+    "lint:fix": "npx eslint src --fix",
+    "prettier": "npx prettier src --check",
+    "prettier:fix": "npx prettier src --write",
+    "format": "npm run prettier:fix && npm run lint:fix"
   },
   "keywords": [],
   "author": "",
@@ -22,6 +26,7 @@
     "@eslint/js": "^9.0.0",
     "cssnano": "^4.1.11",
     "eslint": "^9.0.0",
+    "eslint-config-prettier": "^9.1.0",
     "globals": "^15.0.0",
     "husky": "^9.0.11",
     "parcel": "^2.12.0",
