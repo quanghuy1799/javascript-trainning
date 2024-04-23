@@ -1,2 +1,4 @@
-import { getNotes } from './utils/httpUtils'; 
+/* global document */
 import { renderAllNotes } from './modules/getNotes';
+
+document.addEventListener('DOMContentLoaded', renderAllNotes);

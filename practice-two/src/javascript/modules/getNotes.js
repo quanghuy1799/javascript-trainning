@@ -1,10 +1,11 @@
-import httpUtils from '../utils/httpUtils'; 
+import httpUtils from '../utils/httpUtils';
+/* global document */
 
 function renderNote(note) {
-    const noteContainer = document.createElement('div');
-    noteContainer.className = 'col-md-4 single-note-item all-category';
-    
-    noteContainer.innerHTML = `
+  const noteContainer = document.createElement('div');
+  noteContainer.className = 'col-md-4 single-note-item all-category';
+
+  noteContainer.innerHTML = `
         <div class="card card-body">
             <span class="side-stick"></span>
             <h5 class="note-title text-truncate w-75 mb-0" data-noteheading="${note.title}">${note.title} <i class="point fa fa-circle ml-1 font-10"></i></h5>
@@ -35,17 +36,19 @@ function renderNote(note) {
             </div>
         </div>
     `;
-    
-    document.getElementById('note-full-container').appendChild(noteContainer);
+
+  document.getElementById('note-full-container').appendChild(noteContainer);
 }
 
 async function renderAllNotes() {
-    try {
-        const notes = await httpUtils.getNotes();
-        notes.forEach(note => renderNote(note));
-    } catch (error) {
-        // error
-    }
+  try {
+    const notes = await httpUtils.getNotes();
+    notes.forEach((note) => renderNote(note));
+  } catch (error) {
+    throw error('Failed');
+  }
 }
 
 document.addEventListener('DOMContentLoaded', renderAllNotes);
+
+export { renderAllNotes };
