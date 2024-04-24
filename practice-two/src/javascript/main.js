@@ -1,8 +1,9 @@
 /* global document */
 import { renderAllNotes } from './modules/getNotes';
+import { addNotes } from './modules/addNotes"
 
 document.addEventListener('DOMContentLoaded', renderAllNotes);
 
-import { addNote } from './modules/addNote';
+
 
 addNote();
