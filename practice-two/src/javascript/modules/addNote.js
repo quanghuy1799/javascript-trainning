@@ -16,7 +16,7 @@ if (addNotesButton) {
   addNotesButton.addEventListener('click', () => {
     const addNotesModal = document.getElementById('addnotesmodal');
     if (addNotesModal) {
-      addNotesModal.style.display = 'block';
+      addNotesModal.style.display = 'show';
     }
   });
 }
