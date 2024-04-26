@@ -149,3 +149,13 @@ body {
     max-width: 216px;
   }
 }
+
+.error-message {
+  color: red;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.error-input {
+  border-color: red;
+}
