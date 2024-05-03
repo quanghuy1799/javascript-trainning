@@ -4,9 +4,9 @@ import { renderAllNotes } from './getNotes';
 
 
 
-async function handleDeleteClick(noteId) {
+async function handleDeleteClick() {
   try {
-    await httpUtils.deleteNote(noteId);
+    await httpUtils.deleteNote();
     await renderAllNotes();
     alert('Note deleted successfully!');
   } catch (error) {
