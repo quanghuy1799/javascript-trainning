@@ -33,16 +33,20 @@ body {
   cursor: pointer;
 }
 
+.note-has-grid .single-note-item .remove-note {
+  cursor: pointer;
+}
+
+.note-has-grid .single-note-item .edit-note {
+  cursor: pointer;
+}
+
 .note-has-grid .single-note-item .side-stick {
   position: absolute;
   width: 3px;
   height: 35px;
   left: 0;
   background-color: rgba(82, 95, 127, 0.5);
-}
-
-.note-has-grid .single-note-item .category-dropdown.dropdown-toggle:after {
-  display: none;
 }
 
 .note-has-grid .single-note-item .category [class*='category-'] {

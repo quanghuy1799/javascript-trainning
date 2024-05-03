@@ -3,7 +3,7 @@
 import httpUtils from '../utils/httpUtils';
 import { renderAllNotes } from './getNotes';
 
-async function addNote(note) {
+async function editNote(note) {
   try {
     await httpUtils.createNote(note);
     showSnackbar('Note added successfully!', 'success');
@@ -15,7 +15,7 @@ async function addNote(note) {
 const noteTitleInput = document.getElementById('note-has-title');
 const noteDescriptionInput = document.getElementById('note-has-description');
 const addButton = document.getElementById('btn-n-add');
-const addNotesButton = document.getElementById('add-notes');
+const editNotesButton = document.getElementById('edit-note');
 const closeButton = document.querySelector('.modal-header .close');
 const discardButton = document.querySelector('.modal-footer .btn-danger');
 
@@ -48,7 +48,7 @@ categoryBusinessCheckbox.addEventListener('click', checkbox);
 categorySocialCheckbox.addEventListener('click', checkbox);
 categoryTravelCheckbox.addEventListener('click', checkbox);
 
-async function addNoteAndRender() {
+async function editNoteAndRender() {
 const title = noteTitleInput.value.trim();
 const description = noteDescriptionInput.value.trim();
 
@@ -106,10 +106,10 @@ if (snackbarElement) {
 }
 }
 
-addButton.addEventListener('click', addNoteAndRender);
+addButton.addEventListener('click', editNoteAndRender);
 
-if (addNotesButton) {
-addNotesButton.addEventListener('click', () => {
+if (editNotesButton) {
+editNotesButton.addEventListener('click', () => {
   const addNotesModal = document.getElementById('addnotesmodal');
   if (addNotesModal) {
     addNotesModal.classList.add('show');
@@ -144,4 +144,4 @@ selectedCategory = null;
 addButton.setAttribute('disabled', 'disabled');
 
 
-export {addNote };
+export {editNote };
