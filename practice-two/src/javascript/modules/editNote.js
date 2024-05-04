@@ -21,23 +21,22 @@ const discardButton = document.querySelector('.modal-footer .btn-danger');
 
 let selectedCategory = null;
 
-
 function checkbox(event) {
-const checkbox = event.target;
-const categoryId = checkbox.id;
-const categoryName = checkbox.getAttribute('data-category-name');
+  const checkbox = event.target;
+  const categoryId = checkbox.id;
+  const categoryName = checkbox.getAttribute('data-category-name');
 
-if (checkbox.checked) {
-  if (selectedCategory && selectedCategory !== categoryId) {
-    const prevCheckbox = document.getElementById(selectedCategory);
-    if (prevCheckbox) {
-      prevCheckbox.checked = false;
+  if (checkbox.checked) {
+    if (selectedCategory && selectedCategory !== categoryId) {
+      const prevCheckbox = document.getElementById(selectedCategory);
+      if (prevCheckbox) {
+        prevCheckbox.checked = false;
+      }
     }
+    selectedCategory = categoryId;
+  } else {
+    selectedCategory = null;
   }
-  selectedCategory = categoryId;
-} else {
-  selectedCategory = null;
-}
 }
 
 const categoryBusinessCheckbox = document.getElementById('category-business');
@@ -49,99 +48,98 @@ categorySocialCheckbox.addEventListener('click', checkbox);
 categoryTravelCheckbox.addEventListener('click', checkbox);
 
 async function editNoteAndRender() {
-const title = noteTitleInput.value.trim();
-const description = noteDescriptionInput.value.trim();
+  const title = noteTitleInput.value.trim();
+  const description = noteDescriptionInput.value.trim();
 
-if (title && description && selectedCategory) {
-  const note = {
-    title: title,
-    description: description,
-    category: selectedCategory,
-  };
+  if (title && description && selectedCategory) {
+    const note = {
+      title: title,
+      description: description,
+      category: selectedCategory,
+    };
 
-  try {
-    await httpUtils.createNote(note);
-    showSnackbar('Note added successfully!', 'success');
-    await renderAllNotes();
-    closePopup();
-  } catch (error) {
-    showFormErrorMessage('Error adding note: ' + error.message);
+    try {
+      await httpUtils.createNote(note);
+      showSnackbar('Note added successfully!', 'success');
+      await renderAllNotes();
+      closePopup();
+    } catch (error) {
+      showFormErrorMessage('Error adding note: ' + error.message);
+    }
+  } else {
+    showFormErrorMessage('Please fill out all fields and select a category.');
   }
-} else {
-  showFormErrorMessage('Please fill out all fields and select a category.');
-}
 }
 
 function checkInputs() {
-const title = noteTitleInput.value.trim();
-const description = noteDescriptionInput.value.trim();
+  const title = noteTitleInput.value.trim();
+  const description = noteDescriptionInput.value.trim();
 
-if (!title || title.length > 20 || !description || !selectedCategory) {
-  addButton.setAttribute('disabled', 'disabled');
-} else {
-  addButton.removeAttribute('disabled');
-}
+  if (!title || title.length > 20 || !description || !selectedCategory) {
+    addButton.setAttribute('disabled', 'disabled');
+  } else {
+    addButton.removeAttribute('disabled');
+  }
 }
 
 function closePopup() {
-const modal = document.getElementById('addnotesmodal');
-modal.style.display = 'none';
+  const modal = document.getElementById('addnotesmodal');
+  modal.style.display = 'none';
 }
 
 function showFormErrorMessage(message) {
-const errorMessageElement = document.getElementById('form-error-message');
-if (errorMessageElement) {
-  errorMessageElement.textContent = message;
-  errorMessageElement.style.display = 'block';
-}
+  const errorMessageElement = document.getElementById('form-error-message');
+  if (errorMessageElement) {
+    errorMessageElement.textContent = message;
+    errorMessageElement.style.display = 'block';
+  }
 }
 function showSnackbar(message, type) {
-const snackbarElement = document.getElementById('snackbar');
-if (snackbarElement) {
-  snackbarElement.textContent = message;
-  snackbarElement.className = `show ${type}`;
-  setTimeout(() => {
-    snackbarElement.className = snackbarElement.className.replace('show', '');
-  }, 3000);
-}
+  const snackbarElement = document.getElementById('snackbar');
+  if (snackbarElement) {
+    snackbarElement.textContent = message;
+    snackbarElement.className = `show ${type}`;
+    setTimeout(() => {
+      snackbarElement.className = snackbarElement.className.replace('show', '');
+    }, 3000);
+  }
 }
 
 addButton.addEventListener('click', editNoteAndRender);
 
 if (editNotesButton) {
-editNotesButton.addEventListener('click', () => {
-  const addNotesModal = document.getElementById('addnotesmodal');
-  if (addNotesModal) {
-    addNotesModal.classList.add('show');
-    addNotesModal.style.display = 'block';
-  }
-});
+  editNotesButton.addEventListener('click', () => {
+    const addNotesModal = document.getElementById('addnotesmodal');
+    if (addNotesModal) {
+      addNotesModal.classList.add('show');
+      addNotesModal.style.display = 'block';
+    }
+  });
 }
 
 noteTitleInput.addEventListener('input', checkInputs);
 noteDescriptionInput.addEventListener('input', checkInputs);
 
 closeButton.addEventListener('click', () => {
-closePopup();
-noteTitleInput.value = '';
-noteDescriptionInput.value = '';
-categoryBusinessCheckbox.checked = false;
-categorySocialCheckbox.checked = false;
-categoryTravelCheckbox.checked = false;
-selectedCategory = null;
+  closePopup();
+  noteTitleInput.value = '';
+  noteDescriptionInput.value = '';
+  categoryBusinessCheckbox.checked = false;
+  categorySocialCheckbox.checked = false;
+  categoryTravelCheckbox.checked = false;
+  selectedCategory = null;
 });
 
 discardButton.addEventListener('click', () => {
-closePopup();
-noteTitleInput.value = '';
-noteDescriptionInput.value = '';
-categoryBusinessCheckbox.checked = false;
-categorySocialCheckbox.checked = false;
-categoryTravelCheckbox.checked = false;
-selectedCategory = null;
+  closePopup();
+  noteTitleInput.value = '';
+  noteDescriptionInput.value = '';
+  categoryBusinessCheckbox.checked = false;
+  categorySocialCheckbox.checked = false;
+  categoryTravelCheckbox.checked = false;
+  selectedCategory = null;
 });
 
 addButton.setAttribute('disabled', 'disabled');
 
-
-export {editNote };
+export { editNote };

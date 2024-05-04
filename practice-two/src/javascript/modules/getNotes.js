@@ -1,15 +1,28 @@
 import httpUtils from '../utils/httpUtils';
 /* global document */
 
-function renderNote(note) {
+function renderNotes(note) {
   const { title, description, category } = note;
   const noteDate = new Date();
   const dd = String(noteDate.getDate()).padStart(2, '0');
-  const mm = noteDate.getMonth(); 
+  const mm = noteDate.getMonth();
   const yyyy = noteDate.getFullYear();
-  const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+  const monthNames = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
   const formattedDate = `${dd} ${monthNames[mm]} ${yyyy}`;
-  
+
   let categoryClass = '';
   switch (category) {
     case 'business':
@@ -51,12 +64,10 @@ function renderNote(note) {
   noteFullContainer.insertAdjacentHTML('afterbegin', html);
 }
 
-
-
 async function renderAllNotes() {
   try {
     const notes = await httpUtils.getNotes();
-    notes.forEach((note) => renderNote(note));
+    notes.forEach((note) => renderNotes(note));
   } catch (error) {
     throw error('Failed');
   }
@@ -64,4 +75,4 @@ async function renderAllNotes() {
 
 document.addEventListener('DOMContentLoaded', renderAllNotes);
 
-export { renderAllNotes, renderNote };
+export { renderAllNotes, renderNotes };

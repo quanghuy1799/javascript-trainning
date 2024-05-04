@@ -1,12 +1,12 @@
 import httpUtils from '../utils/httpUtils';
-import { renderNote, renderAllNotes } from './getNotes';
+import { renderNotes, renderAllNotes } from './getNotes';
 /* global document */
 
 async function renderNotesByCategory(category) {
   try {
     const allNotes = await httpUtils.getNotes();
     const filteredNotes = allNotes.filter((note) => note.category === category);
-    filteredNotes.forEach((note) => renderNote(note));
+    filteredNotes.forEach((note) => renderNotes(note));
   } catch (error) {
     throw error('Error fetching notes');
   }

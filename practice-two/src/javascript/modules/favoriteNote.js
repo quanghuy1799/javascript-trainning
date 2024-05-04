@@ -2,9 +2,9 @@
 
 const favouriteIcons = document.querySelectorAll('.favourite-note');
 
-favouriteIcons.forEach(icon => {
-  icon.addEventListener('click', function() {
+favouriteIcons.forEach((icon) => {
+  icon.addEventListener('click', function () {
     this.classList.add('note-favourite');
   });
 });
-export{ favouriteIcons}
+export { favouriteIcons };
