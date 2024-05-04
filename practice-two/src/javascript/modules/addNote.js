@@ -142,4 +142,4 @@ discardButton.addEventListener('click', () => {
 
 addButton.setAttribute('disabled', 'disabled');
 
-export { addNote };
+export { addNoteAndRender };
