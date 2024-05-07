@@ -10,7 +10,18 @@ function renderNotes(note) {
   const mm = noteDate.getMonth();
   const yyyy = noteDate.getFullYear();
   const monthNames = [
-    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
   ];
   const formattedDate = `${dd} ${monthNames[mm]} ${yyyy}`;
 
@@ -75,7 +86,7 @@ function renderNotesList(notes) {
   noteFullContainer.innerHTML = '';
 
   notes.forEach((note) => {
-    renderNotes(note); 
+    renderNotes(note);
   });
 }
 
@@ -103,5 +114,4 @@ pillLinks.forEach((pill) => {
   });
 });
 
-export { noteList, renderNotes, renderAllNotes,  notesArray };
-
+export { noteList, renderNotes, renderAllNotes, notesArray };

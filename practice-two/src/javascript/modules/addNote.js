@@ -24,7 +24,6 @@ let selectedCategory = null;
 function checkbox(event) {
   const checkbox = event.target;
   const categoryId = checkbox.id;
-  const categoryName = checkbox.getAttribute('data-category-name');
 
   if (checkbox.checked) {
     if (selectedCategory && selectedCategory !== categoryId) {
@@ -52,10 +51,26 @@ async function addNoteAndRender() {
   const description = noteDescriptionInput.value.trim();
 
   if (title && description && selectedCategory) {
+    let category = '';
+
+    switch (selectedCategory) {
+      case 'category-business':
+        category = 'business';
+        break;
+      case 'category-social':
+        category = 'social';
+        break;
+      case 'category-travel':
+        category = 'travel';
+        break;
+      default:
+        break;
+    }
+
     const note = {
       title: title,
       description: description,
-      category: selectedCategory, // Thêm category vào note
+      category: category,
     };
 
     try {
@@ -114,13 +129,12 @@ if (addNotesButton) {
       addNotesModal.style.display = 'block';
     }
     noteTitleInput.value = '';
-  noteDescriptionInput.value = '';
-  categoryBusinessCheckbox.checked = false;
-  categorySocialCheckbox.checked = false;
-  categoryTravelCheckbox.checked = false;
-  selectedCategory = null;
+    noteDescriptionInput.value = '';
+    categoryBusinessCheckbox.checked = false;
+    categorySocialCheckbox.checked = false;
+    categoryTravelCheckbox.checked = false;
+    selectedCategory = null;
   });
-  
 }
 
 noteTitleInput.addEventListener('input', checkInputs);
@@ -148,4 +162,4 @@ discardButton.addEventListener('click', () => {
 
 addButton.setAttribute('disabled', 'disabled');
 
-export default { addNote};
+export default { addNote };
