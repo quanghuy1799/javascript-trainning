@@ -55,7 +55,7 @@ async function addNoteAndRender() {
     const note = {
       title: title,
       description: description,
-      category: selectedCategory,
+      category: selectedCategory, // Thêm category vào note
     };
 
     try {
@@ -106,7 +106,6 @@ function showSnackbar(message, type) {
 }
 
 addButton.addEventListener('click', addNoteAndRender);
-
 if (addNotesButton) {
   addNotesButton.addEventListener('click', () => {
     const addNotesModal = document.getElementById('addnotesmodal');
@@ -114,7 +113,14 @@ if (addNotesButton) {
       addNotesModal.classList.add('show');
       addNotesModal.style.display = 'block';
     }
+    noteTitleInput.value = '';
+  noteDescriptionInput.value = '';
+  categoryBusinessCheckbox.checked = false;
+  categorySocialCheckbox.checked = false;
+  categoryTravelCheckbox.checked = false;
+  selectedCategory = null;
   });
+  
 }
 
 noteTitleInput.addEventListener('input', checkInputs);
@@ -142,4 +148,4 @@ discardButton.addEventListener('click', () => {
 
 addButton.setAttribute('disabled', 'disabled');
 
-export { addNote };
+export default { addNote};

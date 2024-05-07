@@ -104,3 +104,4 @@ pillLinks.forEach((pill) => {
 });
 
 export { noteList, renderNotes, renderAllNotes,  notesArray };
+
