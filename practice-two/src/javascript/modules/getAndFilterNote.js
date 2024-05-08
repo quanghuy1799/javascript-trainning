@@ -90,7 +90,7 @@ function renderNotesList(notes) {
   });
 }
 
-export function filterNotesByCategory(category, notes) {
+function filterNotesByCategory(category, notes) {
   return notes.filter((note) => note.category === category);
 }
 
@@ -114,4 +114,9 @@ pillLinks.forEach((pill) => {
   });
 });
 
-export { noteList, renderNotes, renderAllNotes, notesArray };
+export {
+  noteList,
+  renderNotes,
+  renderAllNotes,
+  filterNotesByCategory,
+};
