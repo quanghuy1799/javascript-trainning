@@ -20,5 +20,5 @@ function favoriteNote(event) {
 const noteFullContainer = document.getElementById('note-full-container');
 noteFullContainer.addEventListener('click', favoriteNote);
 
-export { selectStarIcon, favoriteNote };
+export { favoriteNote };
 

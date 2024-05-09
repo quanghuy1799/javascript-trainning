@@ -19,24 +19,7 @@ const addNotesButton = document.getElementById('add-notes');
 const closeButton = document.querySelector('.modal-header .close');
 const discardButton = document.querySelector('.modal-footer .btn-danger');
 
-let selectedCategory = null;
 
-function checkbox(event) {
-  const checkbox = event.target;
-  const categoryId = checkbox.id;
-
-  if (checkbox.checked) {
-    if (selectedCategory && selectedCategory !== categoryId) {
-      const prevCheckbox = document.getElementById(selectedCategory);
-      if (prevCheckbox) {
-        prevCheckbox.checked = false;
-      }
-    }
-    selectedCategory = categoryId;
-  } else {
-    selectedCategory = null;
-  }
-}
 
 const categoryBusinessCheckbox = document.getElementById('category-business');
 const categorySocialCheckbox = document.getElementById('category-social');
@@ -94,6 +77,25 @@ function checkInputs() {
     addButton.setAttribute('disabled', 'disabled');
   } else {
     addButton.removeAttribute('disabled');
+  }
+}
+
+let selectedCategory = null;
+
+function checkbox(event) {
+  const checkbox = event.target;
+  const categoryId = checkbox.id;
+
+  if (checkbox.checked) {
+    if (selectedCategory && selectedCategory !== categoryId) {
+      const prevCheckbox = document.getElementById(selectedCategory);
+      if (prevCheckbox) {
+        prevCheckbox.checked = false;
+      }
+    }
+    selectedCategory = categoryId;
+  } else {
+    selectedCategory = null;
   }
 }
 
