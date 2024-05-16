@@ -3,23 +3,13 @@
 import httpUtils from '../utils/httpUtils';
 import { renderAllNotes } from './getAndFilterNote';
 
-async function addNote(note) {
-  try {
-    await httpUtils.createNote(note);
-    showSnackbar('Note added successfully!', 'success');
-  } catch (error) {
-    showFormErrorMessage('Error adding note: ' + error.message);
-  }
-}
-
 const noteTitleInput = document.getElementById('note-has-title');
 const noteDescriptionInput = document.getElementById('note-has-description');
 const addButton = document.getElementById('btn-n-add');
 const addNotesButton = document.getElementById('add-notes');
 const closeButton = document.querySelector('.modal-header .close');
 const discardButton = document.querySelector('.modal-footer .btn-danger');
-
-
+const saveButton = document.getElementById('btn-n-save');
 
 const categoryBusinessCheckbox = document.getElementById('category-business');
 const categorySocialCheckbox = document.getElementById('category-social');
@@ -58,14 +48,12 @@ async function addNoteAndRender() {
 
     try {
       await httpUtils.createNote(note);
-      showSnackbar('Note added successfully!', 'success');
+      alert('Note added successfully!');
       await renderAllNotes();
       closePopup();
     } catch (error) {
-      showFormErrorMessage('Error adding note: ' + error.message);
+      alert('Error adding note ');
     }
-  } else {
-    showFormErrorMessage('Please fill out all fields and select a category.');
   }
 }
 
@@ -104,31 +92,14 @@ function closePopup() {
   modal.style.display = 'none';
 }
 
-function showFormErrorMessage(message) {
-  const errorMessageElement = document.getElementById('form-error-message');
-  if (errorMessageElement) {
-    errorMessageElement.textContent = message;
-    errorMessageElement.style.display = 'block';
-  }
-}
-function showSnackbar(message, type) {
-  const snackbarElement = document.getElementById('snackbar');
-  if (snackbarElement) {
-    snackbarElement.textContent = message;
-    snackbarElement.className = `show ${type}`;
-    // setTimeout(() => {
-    //   snackbarElement.className = snackbarElement.className.replace('show', '');
-    // }, 3000);
-  }
-}
-
 addButton.addEventListener('click', addNoteAndRender);
 if (addNotesButton) {
   addNotesButton.addEventListener('click', () => {
     const addNotesModal = document.getElementById('addnotesmodal');
     if (addNotesModal) {
-      addNotesModal.classList.add('show');
       addNotesModal.style.display = 'block';
+      addButton.style.display = 'block';
+      saveButton.style.display = 'none';
     }
     noteTitleInput.value = '';
     noteDescriptionInput.value = '';
@@ -164,4 +135,4 @@ discardButton.addEventListener('click', () => {
 
 addButton.setAttribute('disabled', 'disabled');
 
-export default { addNote };
+export { addNoteAndRender };
