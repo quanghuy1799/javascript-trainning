@@ -1,6 +1,8 @@
 import httpUtils from '../utils/httpUtils';
 /* global document */
 
+let notesArray = [];
+
 function renderNotes(note) {
   const { title, description, category } = note;
   const noteDate = new Date();
@@ -8,18 +10,7 @@ function renderNotes(note) {
   const mm = noteDate.getMonth();
   const yyyy = noteDate.getFullYear();
   const monthNames = [
-    'Jan',
-    'Feb',
-    'Mar',
-    'Apr',
-    'May',
-    'Jun',
-    'Jul',
-    'Aug',
-    'Sep',
-    'Oct',
-    'Nov',
-    'Dec',
+    'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
   ];
   const formattedDate = `${dd} ${monthNames[mm]} ${yyyy}`;
 
@@ -51,7 +42,6 @@ function renderNotes(note) {
                               ${description}
                           </p>
                       </div>
-
                       <div class="d-flex align-items-center">
                           <span class="mr-1"><i class="fa fa-star favourite-note"></i></span>
                           <span class="mr-1"><i class="fa fa-trash remove-note"></i></span>
@@ -67,12 +57,50 @@ function renderNotes(note) {
 async function renderAllNotes() {
   try {
     const notes = await httpUtils.getNotes();
+    notesArray = notes;
     notes.forEach((note) => renderNotes(note));
   } catch (error) {
-    throw error('Failed');
+    throw new error('Failed to fetch notes:', error);
   }
 }
 
 document.addEventListener('DOMContentLoaded', renderAllNotes);
 
-export { renderAllNotes, renderNotes };
+function noteList() {
+  return notesArray;
+}
+
+function renderNotesList(notes) {
+  const noteFullContainer = document.getElementById('note-full-container');
+  noteFullContainer.innerHTML = '';
+
+  notes.forEach((note) => {
+    renderNotes(note); 
+  });
+}
+
+export function filterNotesByCategory(category, notes) {
+  return notes.filter((note) => note.category === category);
+}
+
+const pillLinks = document.querySelectorAll('.note-link');
+pillLinks.forEach((pill) => {
+  pill.addEventListener('click', () => {
+    const categoryId = pill.id;
+
+    pillLinks.forEach((link) => {
+      link.classList.remove('active');
+    });
+    pill.classList.add('active');
+
+    if (categoryId === 'all-category') {
+      renderNotesList(notesArray);
+    } else {
+      const category = categoryId.replace('note-', '');
+      const filteredNotes = filterNotesByCategory(category, notesArray);
+      renderNotesList(filteredNotes);
+    }
+  });
+});
+
+export { noteList, renderNotes, renderAllNotes,  notesArray };

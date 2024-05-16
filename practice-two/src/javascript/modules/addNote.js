@@ -1,7 +1,7 @@
 /* global document */
 
 import httpUtils from '../utils/httpUtils';
-import { renderAllNotes } from './getNotes';
+import { renderAllNotes } from './getAndFilterNote';
 
 async function addNote(note) {
   try {

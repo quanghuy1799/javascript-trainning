@@ -1,9 +1,4 @@
-import { renderNotes } from './modules/getNotes';
-import { renderNotesByCategory } from './modules/filterNotes';
+import { filterNotesByCategory, notesArray } from './modules/getAndFilterNote.js';
 
-renderNotes({
-  title: 'Example Title',
-  description: 'Example Description',
-  category: 'business',
-});
-renderNotesByCategory();
+const filteredNotes = filterNotesByCategory('business', notesArray);
+filteredNotes;
