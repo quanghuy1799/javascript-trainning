@@ -24,7 +24,6 @@ let selectedCategory = null;
 function checkbox(event) {
   const checkbox = event.target;
   const categoryId = checkbox.id;
-  const categoryName = checkbox.getAttribute('data-category-name');
 
   if (checkbox.checked) {
     if (selectedCategory && selectedCategory !== categoryId) {
@@ -52,10 +51,26 @@ async function addNoteAndRender() {
   const description = noteDescriptionInput.value.trim();
 
   if (title && description && selectedCategory) {
+    let category = '';
+
+    switch (selectedCategory) {
+      case 'category-business':
+        category = 'business';
+        break;
+      case 'category-social':
+        category = 'social';
+        break;
+      case 'category-travel':
+        category = 'travel';
+        break;
+      default:
+        break;
+    }
+
     const note = {
       title: title,
       description: description,
-      category: selectedCategory,
+      category: category,
     };
 
     try {
@@ -106,7 +121,6 @@ function showSnackbar(message, type) {
 }
 
 addButton.addEventListener('click', addNoteAndRender);
-
 if (addNotesButton) {
   addNotesButton.addEventListener('click', () => {
     const addNotesModal = document.getElementById('addnotesmodal');
@@ -114,6 +128,12 @@ if (addNotesButton) {
       addNotesModal.classList.add('show');
       addNotesModal.style.display = 'block';
     }
+    noteTitleInput.value = '';
+    noteDescriptionInput.value = '';
+    categoryBusinessCheckbox.checked = false;
+    categorySocialCheckbox.checked = false;
+    categoryTravelCheckbox.checked = false;
+    selectedCategory = null;
   });
 }
 
@@ -142,4 +162,4 @@ discardButton.addEventListener('click', () => {
 
 addButton.setAttribute('disabled', 'disabled');
 
-export { addNote };
+export default { addNote };
