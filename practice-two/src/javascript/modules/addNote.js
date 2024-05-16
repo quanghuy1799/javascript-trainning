@@ -114,9 +114,9 @@ function showSnackbar(message, type) {
   if (snackbarElement) {
     snackbarElement.textContent = message;
     snackbarElement.className = `show ${type}`;
-    setTimeout(() => {
-      snackbarElement.className = snackbarElement.className.replace('show', '');
-    }, 3000);
+    // setTimeout(() => {
+    //   snackbarElement.className = snackbarElement.className.replace('show', '');
+    // }, 3000);
   }
 }
 
