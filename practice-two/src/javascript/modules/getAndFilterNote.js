@@ -4,8 +4,8 @@ import httpUtils from '../utils/httpUtils';
 let notesArray = [];
 
 function renderNotes(note) {
-  const { title, description, category } = note;
-  const noteDate = new Date();
+  const { id, title, description, category, dateCN } = note;
+  const noteDate = new Date(dateCN * 1000);
   const dd = String(noteDate.getDate()).padStart(2, '0');
   const mm = noteDate.getMonth();
   const yyyy = noteDate.getFullYear();
@@ -54,9 +54,9 @@ function renderNotes(note) {
                           </p>
                       </div>
                       <div class="d-flex align-items-center">
-                          <span class="mr-1"><i class="fa fa-star favourite-note"></i></span>
-                          <span class="mr-1"><i class="fa fa-trash remove-note"></i></span>
-                          <span class="mr-1"><i class="fa fa-pencil edit-note"></i></span>
+                          <span class="mr-1"><i class="fa fa-star favorite-note" data-id="${id}"></i></span>
+                          <span class="mr-1"><i class="fa fa-trash remove-note" data-id="${id}"></i></span>
+                          <span class="mr-1"><i class="fa fa-pencil edit-note" data-id="${id}"></i></span>
                       </div>
                   </div>
               </div>`;
@@ -64,16 +64,19 @@ function renderNotes(note) {
   const noteFullContainer = document.getElementById('note-full-container');
   noteFullContainer.insertAdjacentHTML('afterbegin', html);
 }
-
 async function renderAllNotes() {
   try {
     const notes = await httpUtils.getNotes();
     notesArray = notes;
+
+    const noteFullContainer = document.getElementById('note-full-container');
+    noteFullContainer.innerHTML = '';
     notes.forEach((note) => renderNotes(note));
   } catch (error) {
-    throw new error('Failed to fetch notes:', error);
+    throw new Error('Failed to fetch notes:', error);
   }
 }
+
 
 document.addEventListener('DOMContentLoaded', renderAllNotes);
 
@@ -91,7 +94,10 @@ function renderNotesList(notes) {
 }
 
 function filterNotesByCategory(category, notes) {
-  return notes.filter((note) => note.category === category);
+  if (notes) {
+    return notes.filter((note) => note.category === category);
+  }
+  return [];
 }
 
 const pillLinks = document.querySelectorAll('.note-link');
@@ -114,9 +120,4 @@ pillLinks.forEach((pill) => {
   });
 });
 
-export {
-  noteList,
-  renderNotes,
-  renderAllNotes,
-  filterNotesByCategory,
-};
+export { noteList, renderNotes, renderAllNotes, filterNotesByCategory };

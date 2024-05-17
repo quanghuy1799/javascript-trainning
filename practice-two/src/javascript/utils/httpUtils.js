@@ -40,8 +40,21 @@ function deleteNote(noteId) {
   return fetchData(`${BASE_URL}/${noteId}`, requestOptions);
 }
 
+//Update request
+function updateNote(noteId, updatedNote) {
+  const requestOptions = {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(updatedNote),
+  };
+  return fetchData(`${BASE_URL}/${noteId}`, requestOptions);
+}
+
 export default {
   getNotes,
   createNote,
   deleteNote,
+  updateNote,
 };
