@@ -14,6 +14,9 @@ const categoryBusinessCheckbox = document.getElementById('category-business');
 const categorySocialCheckbox = document.getElementById('category-social');
 const categoryTravelCheckbox = document.getElementById('category-travel');
 
+const titleError = document.getElementById('title-error');
+const descriptionError = document.getElementById('description-error');
+
 categoryBusinessCheckbox.addEventListener('click', checkbox);
 categorySocialCheckbox.addEventListener('click', checkbox);
 categoryTravelCheckbox.addEventListener('click', checkbox);
@@ -76,6 +79,7 @@ document.addEventListener('DOMContentLoaded', () => {
         categorySocialCheckbox.checked = false;
         categoryTravelCheckbox.checked = false;
         selectedCategory = null;
+        clearErrorMessages();
       }
     });
   }
@@ -85,10 +89,41 @@ function checkInputs() {
   const title = noteTitleInput.value.trim();
   const description = noteDescriptionInput.value.trim();
 
-  if (!title || title.length > 20 || !description || !selectedCategory) {
-    saveButton.setAttribute('disabled', 'disabled');
+  let isValid = true;
+
+  if (!title) {
+    titleError.textContent = 'Title is required';
+    titleError.style.display = 'block';
+    noteTitleInput.classList.add('error-input');
+    isValid = false;
+  } else if (title.length > 20) {
+    titleError.textContent = 'Title cannot be longer than 20 characters';
+    titleError.style.display = 'block';
+    noteTitleInput.classList.add('error-input');
+    isValid = false;
   } else {
+    titleError.style.display = 'none';
+    noteTitleInput.classList.remove('error-input');
+  }
+
+  if (!description) {
+    descriptionError.textContent = 'Description is required';
+    descriptionError.style.display = 'block';
+    noteDescriptionInput.classList.add('error-input');
+    isValid = false;
+  } else {
+    descriptionError.style.display = 'none';
+    noteDescriptionInput.classList.remove('.error-input');
+  }
+
+  if (!selectedCategory) {
+    isValid = false;
+  }
+
+  if (isValid) {
     saveButton.removeAttribute('disabled');
+  } else {
+    saveButton.setAttribute('disabled', 'disabled');
   }
 }
 
@@ -109,11 +144,21 @@ function checkbox(event) {
   } else {
     selectedCategory = null;
   }
+
+  checkInputs();
 }
 
 function closePopup() {
   const modal = document.getElementById('addnotesmodal');
   modal.style.display = 'none';
+  clearErrorMessages();
+}
+
+function clearErrorMessages() {
+  titleError.style.display = 'none';
+  descriptionError.style.display = 'none';
+  noteTitleInput.classList.remove('error-input');
+  noteDescriptionInput.classList.remove('error-input');
 }
 
 noteTitleInput.addEventListener('input', checkInputs);
