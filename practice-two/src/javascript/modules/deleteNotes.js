@@ -2,7 +2,7 @@
 import httpUtils from '../utils/httpUtils';
 import { renderAllNotes } from './getAndFilterNote';
 
-async function handleDeleteClick(noteId) {
+async function handleDelete(noteId) {
   try {
     await httpUtils.deleteNote(noteId);
     await renderAllNotes();
@@ -23,11 +23,11 @@ document.addEventListener('DOMContentLoaded', () => {
           'Are you sure you want to delete this note?',
         );
         if (confirmDelete) {
-          handleDeleteClick(noteId);
+          handleDelete(noteId);
         }
       }
     });
   }
 });
 
-export { handleDeleteClick };
+export { handleDelete };

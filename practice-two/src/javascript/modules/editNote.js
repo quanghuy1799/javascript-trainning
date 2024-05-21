@@ -80,6 +80,7 @@ document.addEventListener('DOMContentLoaded', () => {
         categoryTravelCheckbox.checked = false;
         selectedCategory = null;
         clearErrorMessages();
+        checkInputs();
       }
     });
   }

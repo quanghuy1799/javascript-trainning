@@ -1,7 +1,7 @@
-import httpUtils from '../utils/httpUtils';
 /* global document */
+import httpUtils from '../utils/httpUtils';
 
-let notesArray = [];
+let noteItems = [];
 
 function renderNotes(note) {
   const { id, title, description, category, dateCN } = note;
@@ -67,7 +67,7 @@ function renderNotes(note) {
 async function renderAllNotes() {
   try {
     const notes = await httpUtils.getNotes();
-    notesArray = notes;
+    noteItems = notes;
 
     const noteFullContainer = document.getElementById('note-full-container');
     noteFullContainer.innerHTML = '';
@@ -77,11 +77,10 @@ async function renderAllNotes() {
   }
 }
 
-
 document.addEventListener('DOMContentLoaded', renderAllNotes);
 
 function noteList() {
-  return notesArray;
+  return noteItems;
 }
 
 function renderNotesList(notes) {
@@ -93,7 +92,7 @@ function renderNotesList(notes) {
   });
 }
 
-function filterNotesByCategory(category, notes) {
+function filterNotes(category, notes) {
   if (notes) {
     return notes.filter((note) => note.category === category);
   }
@@ -111,13 +110,13 @@ pillLinks.forEach((pill) => {
     pill.classList.add('active');
 
     if (categoryId === 'all-category') {
-      renderNotesList(notesArray);
+      renderNotesList(noteItems);
     } else {
       const category = categoryId.replace('note-', '');
-      const filteredNotes = filterNotesByCategory(category, notesArray);
+      const filteredNotes = filterNotes(category, noteItems);
       renderNotesList(filteredNotes);
     }
   });
 });
 
-export { noteList, renderNotes, renderAllNotes, filterNotesByCategory };
+export { noteList, renderNotes, renderAllNotes, filterNotes };

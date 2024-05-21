@@ -1,5 +1,4 @@
 /* global document */
-
 import httpUtils from '../utils/httpUtils';
 import { renderAllNotes } from './getAndFilterNote';
 
@@ -10,6 +9,9 @@ const addNotesButton = document.getElementById('add-notes');
 const closeButton = document.querySelector('.modal-header .close');
 const discardButton = document.querySelector('.modal-footer .btn-danger');
 const saveButton = document.getElementById('btn-n-save');
+
+const titleError = document.getElementById('title-error');
+const descriptionError = document.getElementById('description-error');
 
 const categoryBusinessCheckbox = document.getElementById('category-business');
 const categorySocialCheckbox = document.getElementById('category-social');
@@ -93,9 +95,9 @@ function checkInputs() {
   }
 
   if (isValid) {
-    saveButton.removeAttribute('disabled');
+    addButton.removeAttribute('disabled');
   } else {
-    saveButton.setAttribute('disabled', 'disabled');
+    addButton.setAttribute('disabled', 'disabled');
   }
 }
 

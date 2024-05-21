@@ -1,6 +1,6 @@
+/* global document */
 import httpUtils from '../utils/httpUtils';
 import { renderNotes, renderAllNotes } from './getAndFilterNote';
-/* global document */
 
 async function renderNotesByCategory(category) {
   try {

@@ -1,11 +1,10 @@
-// /* global document */
-import { filterNotesByCategory } from './modules/getAndFilterNote.js';
+import { filterNotes } from './modules/getAndFilterNote.js';
 import { addNoteAndRender } from './modules/addNote.js';
 import { favoriteNote } from './modules/favoriteNote.js';
-import { handleDeleteClick } from './modules/deleteNotes.js';
+import { handleDelete } from './modules/deleteNotes.js';
 import { editNote } from './modules/editNote.js';
-// import { editNotesAndRender } from './modules/editNote.js';
-filterNotesByCategory('all-notes');
+
+filterNotes('all-notes');
 addNoteAndRender();
 favoriteNote();
 editNote();

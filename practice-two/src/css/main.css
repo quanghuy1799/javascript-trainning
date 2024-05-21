@@ -29,7 +29,7 @@ body {
   border-radius: 10px;
 }
 
-.note-has-grid .single-note-item .favourite-note {
+.note-has-grid .single-note-item .favorite-note {
   cursor: pointer;
 }
 
@@ -94,7 +94,7 @@ body {
   display: inline-block;
 }
 
-.note-has-grid .single-note-item.note-favourite .favourite-note {
+.note-has-grid .single-note-item.note-favorite .favorite-note {
   color: #ffc107;
 }
 
@@ -123,19 +123,19 @@ body {
 }
 
 .note-has-grid .single-note-item.all-category .more-options,
-.note-has-grid .single-note-item.all-category.note-favourite .more-options {
+.note-has-grid .single-note-item.all-category.note-favorite .more-options {
   display: block;
 }
 
 .note-has-grid .single-note-item.all-category.note-business .more-options,
 .note-has-grid
-  .single-note-item.all-category.note-favourite.note-business
+  .single-note-item.all-category.note-favorite.note-business
   .more-options,
 .note-has-grid
-  .single-note-item.all-category.note-favourite.note-travel
+  .single-note-item.all-category.note-favorite.note-travel
   .more-options,
 .note-has-grid
-  .single-note-item.all-category.note-favourite.note-social
+  .single-note-item.all-category.note-favorite.note-social
   .more-options,
 .note-has-grid .single-note-item.all-category.note-travel .more-options,
 .note-has-grid .single-note-item.all-category.note-social .more-options {
