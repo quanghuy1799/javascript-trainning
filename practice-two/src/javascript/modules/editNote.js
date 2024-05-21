@@ -23,6 +23,9 @@ categoryTravelCheckbox.addEventListener('click', checkbox);
 
 let selectedNoteId = null;
 
+let titleHasInteracted = false;
+let descriptionHasInteracted = false;
+
 async function editNote() {
   const title = noteTitleInput.value.trim();
   const description = noteDescriptionInput.value.trim();
@@ -80,6 +83,8 @@ document.addEventListener('DOMContentLoaded', () => {
         categoryTravelCheckbox.checked = false;
         selectedCategory = null;
         clearErrorMessages();
+        titleHasInteracted = false;
+        descriptionHasInteracted = false;
         checkInputs();
       }
     });
@@ -93,14 +98,18 @@ function checkInputs() {
   let isValid = true;
 
   if (!title) {
-    titleError.textContent = 'Title is required';
-    titleError.style.display = 'block';
-    noteTitleInput.classList.add('error-input');
+    if (titleHasInteracted) {
+      titleError.textContent = 'Title is required';
+      titleError.style.display = 'block';
+      noteTitleInput.classList.add('error-input');
+    }
     isValid = false;
   } else if (title.length > 20) {
-    titleError.textContent = 'Title cannot be longer than 20 characters';
-    titleError.style.display = 'block';
-    noteTitleInput.classList.add('error-input');
+    if (titleHasInteracted) {
+      titleError.textContent = 'Title cannot be longer than 20 characters';
+      titleError.style.display = 'block';
+      noteTitleInput.classList.add('error-input');
+    }
     isValid = false;
   } else {
     titleError.style.display = 'none';
@@ -108,13 +117,15 @@ function checkInputs() {
   }
 
   if (!description) {
-    descriptionError.textContent = 'Description is required';
-    descriptionError.style.display = 'block';
-    noteDescriptionInput.classList.add('error-input');
+    if (descriptionHasInteracted) {
+      descriptionError.textContent = 'Description is required';
+      descriptionError.style.display = 'block';
+      noteDescriptionInput.classList.add('error-input');
+    }
     isValid = false;
   } else {
     descriptionError.style.display = 'none';
-    noteDescriptionInput.classList.remove('.error-input');
+    noteDescriptionInput.classList.remove('error-input');
   }
 
   if (!selectedCategory) {
@@ -127,6 +138,16 @@ function checkInputs() {
     saveButton.setAttribute('disabled', 'disabled');
   }
 }
+
+noteTitleInput.addEventListener('input', () => {
+  titleHasInteracted = true;
+  checkInputs();
+});
+
+noteDescriptionInput.addEventListener('input', () => {
+  descriptionHasInteracted = true;
+  checkInputs();
+});
 
 let selectedCategory = null;
 
@@ -162,9 +183,6 @@ function clearErrorMessages() {
   noteDescriptionInput.classList.remove('error-input');
 }
 
-noteTitleInput.addEventListener('input', checkInputs);
-noteDescriptionInput.addEventListener('input', checkInputs);
-
 closeButton.addEventListener('click', () => {
   closePopup();
   noteTitleInput.value = '';
@@ -173,6 +191,8 @@ closeButton.addEventListener('click', () => {
   categorySocialCheckbox.checked = false;
   categoryTravelCheckbox.checked = false;
   selectedCategory = null;
+  titleHasInteracted = false;
+  descriptionHasInteracted = false;
 });
 
 discardButton.addEventListener('click', () => {
@@ -183,6 +203,8 @@ discardButton.addEventListener('click', () => {
   categorySocialCheckbox.checked = false;
   categoryTravelCheckbox.checked = false;
   selectedCategory = null;
+  titleHasInteracted = false;
+  descriptionHasInteracted = false;
 });
 
 saveButton.addEventListener('click', editNote);
