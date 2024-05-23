@@ -9,6 +9,7 @@ const addNotesButton = document.getElementById('add-notes');
 const closeButton = document.querySelector('.modal-header .close');
 const discardButton = document.querySelector('.modal-footer .btn-danger');
 const saveButton = document.getElementById('btn-n-save');
+const noteForm = document.getElementById('addnotesmodalTitle');
 
 const titleError = document.getElementById('title-error');
 const descriptionError = document.getElementById('description-error');
@@ -54,7 +55,7 @@ async function addNoteAndRender() {
       await renderAllNotes();
       closePopup();
     } catch (error) {
-      alert('Error adding note ');
+      alert('Error adding note');
     }
   }
 }
@@ -123,6 +124,8 @@ function checkbox(event) {
 function closePopup() {
   const modal = document.getElementById('addnotesmodal');
   modal.style.display = 'none';
+  noteForm.reset();
+  selectedCategory = null;
 }
 
 addButton.addEventListener('click', addNoteAndRender);
@@ -134,11 +137,7 @@ if (addNotesButton) {
       addButton.style.display = 'block';
       saveButton.style.display = 'none';
     }
-    noteTitleInput.value = '';
-    noteDescriptionInput.value = '';
-    categoryBusinessCheckbox.checked = false;
-    categorySocialCheckbox.checked = false;
-    categoryTravelCheckbox.checked = false;
+    noteForm.reset();
     selectedCategory = null;
   });
 }
@@ -146,25 +145,8 @@ if (addNotesButton) {
 noteTitleInput.addEventListener('input', checkInputs);
 noteDescriptionInput.addEventListener('input', checkInputs);
 
-closeButton.addEventListener('click', () => {
-  closePopup();
-  noteTitleInput.value = '';
-  noteDescriptionInput.value = '';
-  categoryBusinessCheckbox.checked = false;
-  categorySocialCheckbox.checked = false;
-  categoryTravelCheckbox.checked = false;
-  selectedCategory = null;
-});
-
-discardButton.addEventListener('click', () => {
-  closePopup();
-  noteTitleInput.value = '';
-  noteDescriptionInput.value = '';
-  categoryBusinessCheckbox.checked = false;
-  categorySocialCheckbox.checked = false;
-  categoryTravelCheckbox.checked = false;
-  selectedCategory = null;
-});
+closeButton.addEventListener('click', closePopup);
+discardButton.addEventListener('click', closePopup);
 
 addButton.setAttribute('disabled', 'disabled');
 
