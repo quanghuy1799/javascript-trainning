@@ -9,6 +9,7 @@ const saveButton = document.getElementById('btn-n-save');
 const addButton = document.getElementById('btn-n-add');
 const closeButton = document.querySelector('.modal-header .close');
 const discardButton = document.querySelector('.modal-footer .btn-danger');
+const noteForm = document.getElementById('addnotesmodalTitle');
 
 const categoryBusinessCheckbox = document.getElementById('category-business');
 const categorySocialCheckbox = document.getElementById('category-social');
@@ -67,25 +68,37 @@ async function editNote() {
 document.addEventListener('DOMContentLoaded', () => {
   const noteFullContainer = document.getElementById('note-full-container');
   if (noteFullContainer) {
-    noteFullContainer.addEventListener('click', function (event) {
+    noteFullContainer.addEventListener('click', async function (event) {
       if (event.target.classList.contains('edit-note')) {
         selectedNoteId = event.target.dataset.id;
-        const addNotesModal = document.getElementById('addnotesmodal');
-        if (addNotesModal) {
-          addNotesModal.style.display = 'block';
-          saveButton.style.display = 'block';
-          addButton.style.display = 'none';
+
+        // Fetch note data based on selectedNoteId
+        try {
+          const response = await fetch(`https://66149e8d2fc47b4cf27c99bc.mockapi.io/notes/${selectedNoteId}`);
+          const note = await response.json();
+
+          // Set the values in the modal
+          noteTitleInput.value = note.title;
+          noteDescriptionInput.value = note.description;
+          categoryBusinessCheckbox.checked = note.category === 'business';
+          categorySocialCheckbox.checked = note.category === 'social';
+          categoryTravelCheckbox.checked = note.category === 'travel';
+          selectedCategory = note.category ? `category-${note.category}` : null;
+
+          const addNotesModal = document.getElementById('addnotesmodal');
+          if (addNotesModal) {
+            addNotesModal.style.display = 'block';
+            saveButton.style.display = 'block';
+            addButton.style.display = 'none';
+          }
+
+          clearErrorMessages();
+          titleHasInteracted = false;
+          descriptionHasInteracted = false;
+          checkInputs();
+        } catch (error) {
+          alert('An error occurred while fetching the note: ' + error.message);
         }
-        noteTitleInput.value = '';
-        noteDescriptionInput.value = '';
-        categoryBusinessCheckbox.checked = false;
-        categorySocialCheckbox.checked = false;
-        categoryTravelCheckbox.checked = false;
-        selectedCategory = null;
-        clearErrorMessages();
-        titleHasInteracted = false;
-        descriptionHasInteracted = false;
-        checkInputs();
       }
     });
   }
@@ -174,6 +187,7 @@ function closePopup() {
   const modal = document.getElementById('addnotesmodal');
   modal.style.display = 'none';
   clearErrorMessages();
+  noteForm.reset(); // Reset the form
 }
 
 function clearErrorMessages() {
@@ -185,11 +199,7 @@ function clearErrorMessages() {
 
 closeButton.addEventListener('click', () => {
   closePopup();
-  noteTitleInput.value = '';
-  noteDescriptionInput.value = '';
-  categoryBusinessCheckbox.checked = false;
-  categorySocialCheckbox.checked = false;
-  categoryTravelCheckbox.checked = false;
+  noteForm.reset(); // Reset the form
   selectedCategory = null;
   titleHasInteracted = false;
   descriptionHasInteracted = false;
@@ -197,11 +207,7 @@ closeButton.addEventListener('click', () => {
 
 discardButton.addEventListener('click', () => {
   closePopup();
-  noteTitleInput.value = '';
-  noteDescriptionInput.value = '';
-  categoryBusinessCheckbox.checked = false;
-  categorySocialCheckbox.checked = false;
-  categoryTravelCheckbox.checked = false;
+  noteForm.reset(); // Reset the form
   selectedCategory = null;
   titleHasInteracted = false;
   descriptionHasInteracted = false;
