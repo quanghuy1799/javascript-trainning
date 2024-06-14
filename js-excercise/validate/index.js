@@ -1,6 +1,10 @@
-function validateRequiredValue(value) {
+function toString(value) {
+    return value ? "true" : "false";
+}
+
+function validateRequiredValue(value, errorMessage) {
     if (value === '' || value === undefined || value === null) {
-        return 'This field is required';
+        return errorMessage;
     }
     return undefined;
 }
@@ -20,20 +24,29 @@ function validatePassword(password) {
     return undefined;
 }
 
-function validateConfirmPassword(field) {
-    return (confirmPassword, formData) => {
-        if (confirmPassword !== formData[field]) {
-            return "Passwords don't match";
-        }
-        return undefined;
+function validateConfirmPassword(confirmPassword, formData, targetField) {
+    if (confirmPassword !== formData[targetField]) {
+        return "Passwords don't match";
     }
+    return undefined;
 }
 
 const signUpValidationFnSchema = {
-    username: [validateRequiredValue],
-    email: [validateRequiredValue, validateEmail],
-    password: [validateRequiredValue, validatePassword],
-    confirmPassword: [validateRequiredValue, validateConfirmPassword('password')],
+    username: [
+        { fn: value => validateRequiredValue(value, 'Username is required') }
+    ],
+    email: [
+        { fn: value => validateRequiredValue(value, 'Email is required') },
+        { fn: validateEmail }
+    ],
+    password: [
+        { fn: value => validateRequiredValue(value, 'Password is required') },
+        { fn: validatePassword }
+    ],
+    confirmPassword: [
+        { fn: value => validateRequiredValue(value, 'Please confirm your password') },
+        { fn: (value, formData) => validateConfirmPassword(value, formData, 'password') }
+    ]
 }
 
 function setError(element, message) {
@@ -61,10 +74,8 @@ function validateForm(formData, validationFnSchema) {
 
     for (const field in validationFnSchema) {
         const validationFns = validationFnSchema[field];
-        for (const validateFn of validationFns) {
-            const error = field === 'confirmPassword'
-                ? validateFn(formData[field], formData)
-                : validateFn(formData[field]);
+        for (const { fn } of validationFns) {
+            const error = fn(formData[field], formData);
             if (error) {
                 errors[field] = error;
                 break;
