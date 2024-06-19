@@ -3,33 +3,56 @@
 const addButton = document.getElementById('btn-n-add');
 let selectedCategory = null;
 
-function checkInputs(formData) {
+function isFormValid(formData) {
   const title = formData.get('title').trim();
   const description = formData.get('description').trim();
 
   let isValid = true;
 
-  if (!title) {
-    showError('title-error', 'Title is required');
+  if (!isTextInputValid('title', title, 20)) {
     isValid = false;
-  } else if (title.length > 20) {
-    showError('title-error', 'Title cannot be longer than 20 characters');
-    isValid = false;
-  } else {
-    hideError('title-error');
   }
 
-  if (!description) {
-    showError('description-error', 'Description is required');
+  if (!isTextInputValid('description', description)) {
     isValid = false;
-  } else {
-    hideError('description-error');
   }
 
+  if (!isCategorySelected()) {
+    isValid = false;
+  }
+
+  toggleButton(isValid);
+
+  return isValid;
+}
+
+function isTextInputValid(field, value, maxLength = null) {
+  if (!value) {
+    showError(`${field}-error`, `${capitalize(field)} is required`);
+    return false;
+  } else if (maxLength && value.length > maxLength) {
+    showError(
+      `${field}-error`,
+      `${capitalize(field)} cannot be longer than ${maxLength} characters`,
+    );
+    return false;
+  } else {
+    hideError(`${field}-error`);
+    return true;
+  }
+}
+
+function isCategorySelected() {
   if (!selectedCategory) {
-    isValid = false;
+    showError('category-error', 'Category is required');
+    return false;
+  } else {
+    hideError('category-error');
+    return true;
   }
+}
 
+function toggleButton(isValid) {
   if (isValid) {
     addButton.removeAttribute('disabled');
   } else {
@@ -41,36 +64,23 @@ function showError(errorId, message) {
   const errorElement = document.getElementById(errorId);
   errorElement.textContent = message;
   errorElement.style.display = 'block';
-  const inputElement = document.getElementById(`note-has-${errorId.split('-')[0]}`);
+  const inputElement = document.getElementById(
+    `note-has-${errorId.split('-')[0]}`,
+  );
   inputElement.classList.add('error-input');
 }
 
 function hideError(errorId) {
   const errorElement = document.getElementById(errorId);
   errorElement.style.display = 'none';
-  const inputElement = document.getElementById(`note-has-${errorId.split('-')[0]}`);
+  const inputElement = document.getElementById(
+    `note-has-${errorId.split('-')[0]}`,
+  );
   inputElement.classList.remove('error-input');
 }
 
-function checkbox(event) {
-  const checkbox = event.target;
-  const categoryId = checkbox.id;
-
-  if (checkbox.checked) {
-    if (selectedCategory && selectedCategory !== categoryId) {
-      const prevCheckbox = document.getElementById(selectedCategory);
-      if (prevCheckbox) {
-        prevCheckbox.checked = false;
-      }
-    }
-    selectedCategory = categoryId;
-  } else {
-    selectedCategory = null;
-  }
+function capitalize(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-function setSelectedCategory(category) {
-  selectedCategory = category;
-}
-
-export { checkInputs, checkbox, setSelectedCategory };
+export { isFormValid };

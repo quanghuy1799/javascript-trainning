@@ -1,8 +1,7 @@
-/* global document */
-
 import httpUtils from '../utils/httpUtils';
 import { renderAllNotes } from './getAndFilterNote';
-import { checkInputs, checkbox,setSelectedCategory } from './validation';
+import { isFormValid } from './validation';
+import { setNoteCategory } from './setNoteCategory';
 
 const noteTitleInput = document.getElementById('note-has-title');
 const noteDescriptionInput = document.getElementById('note-has-description');
@@ -19,9 +18,9 @@ const categoryTravelCheckbox = document.getElementById('category-travel');
 const titleError = document.getElementById('title-error');
 const descriptionError = document.getElementById('description-error');
 
-categoryBusinessCheckbox.addEventListener('click', checkbox);
-categorySocialCheckbox.addEventListener('click', checkbox);
-categoryTravelCheckbox.addEventListener('click', checkbox);
+categoryBusinessCheckbox.addEventListener('click', setNoteCategory);
+categorySocialCheckbox.addEventListener('click', setNoteCategory);
+categoryTravelCheckbox.addEventListener('click', setNoteCategory);
 
 let selectedNoteId = null;
 
@@ -76,7 +75,9 @@ document.addEventListener('DOMContentLoaded', () => {
         selectedNoteId = event.target.dataset.id;
 
         try {
-          const response = await fetch(`https://66149e8d2fc47b4cf27c99bc.mockapi.io/notes/${selectedNoteId}`);
+          const response = await fetch(
+            `https://66149e8d2fc47b4cf27c99bc.mockapi.io/notes/${selectedNoteId}`,
+          );
           const note = await response.json();
 
           noteTitleInput.value = note.title;
@@ -84,7 +85,9 @@ document.addEventListener('DOMContentLoaded', () => {
           categoryBusinessCheckbox.checked = note.category === 'business';
           categorySocialCheckbox.checked = note.category === 'social';
           categoryTravelCheckbox.checked = note.category === 'travel';
-          setSelectedCategory(note.category ? `category-${note.category}` : null);
+          setSelectedCategory(
+            note.category ? `category-${note.category}` : null,
+          );
 
           const addNotesModal = document.getElementById('addnotesmodal');
           if (addNotesModal) {
@@ -93,11 +96,16 @@ document.addEventListener('DOMContentLoaded', () => {
             addButton.style.display = 'none';
           }
 
-          clearErrorMessages(titleError, descriptionError, noteTitleInput, noteDescriptionInput);
+          clearErrorMessages(
+            titleError,
+            descriptionError,
+            noteTitleInput,
+            noteDescriptionInput,
+          );
           titleHasInteracted = false;
           descriptionHasInteracted = false;
           const formData = new FormData(noteForm);
-          checkInputs(formData, titleError, descriptionError, noteTitleInput, noteDescriptionInput, saveButton);
+          isFormValid(formData);
         } catch (error) {
           alert('An error occurred while fetching the note: ' + error.message);
         }
@@ -109,7 +117,12 @@ document.addEventListener('DOMContentLoaded', () => {
 function closePopup() {
   const modal = document.getElementById('addnotesmodal');
   modal.style.display = 'none';
-  clearErrorMessages(titleError, descriptionError, noteTitleInput, noteDescriptionInput);
+  clearErrorMessages(
+    titleError,
+    descriptionError,
+    noteTitleInput,
+    noteDescriptionInput,
+  );
   resetForm(noteForm);
   setSelectedCategory(null);
   titleHasInteracted = false;
@@ -119,13 +132,13 @@ function closePopup() {
 noteTitleInput.addEventListener('input', () => {
   titleHasInteracted = true;
   const formData = new FormData(noteForm);
-  checkInputs(formData, titleError, descriptionError, noteTitleInput, noteDescriptionInput, saveButton);
+  isFormValid(formData);
 });
 
 noteDescriptionInput.addEventListener('input', () => {
   descriptionHasInteracted = true;
   const formData = new FormData(noteForm);
-  checkInputs(formData, titleError, descriptionError, noteTitleInput, noteDescriptionInput, saveButton);
+  isFormValid(formData);
 });
 
 closeButton.addEventListener('click', closePopup);

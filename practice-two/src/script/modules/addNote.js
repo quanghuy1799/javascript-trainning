@@ -1,7 +1,8 @@
 /* global document */
 import httpUtils from '../utils/httpUtils';
 import { renderAllNotes } from './getAndFilterNote';
-import { checkInputs, checkbox, setSelectedCategory } from './validation';
+import { isFormValid } from './validation';
+import { setNoteCategory } from './setNoteCategory';
 
 const noteTitleInput = document.getElementById('note-has-title');
 const noteDescriptionInput = document.getElementById('note-has-description');
@@ -16,16 +17,16 @@ const categoryBusinessCheckbox = document.getElementById('category-business');
 const categorySocialCheckbox = document.getElementById('category-social');
 const categoryTravelCheckbox = document.getElementById('category-travel');
 
-categoryBusinessCheckbox.addEventListener('click', checkbox);
-categorySocialCheckbox.addEventListener('click', checkbox);
-categoryTravelCheckbox.addEventListener('click', checkbox);
+categoryBusinessCheckbox.addEventListener('click', setNoteCategory);
+categorySocialCheckbox.addEventListener('click', setNoteCategory);
+categoryTravelCheckbox.addEventListener('click', setNoteCategory);
 
 async function addNoteAndRender() {
   const formData = new FormData(noteForm);
   const title = formData.get('title').trim();
   const description = formData.get('description').trim();
 
-  if (title && description && selectedCategory) {
+  if (isFormValid(formData)) {
     let category = '';
 
     switch (selectedCategory) {
@@ -82,11 +83,11 @@ if (addNotesButton) {
 
 noteTitleInput.addEventListener('input', () => {
   const formData = new FormData(noteForm);
-  checkInputs(formData);
+  isFormValid(formData);
 });
 noteDescriptionInput.addEventListener('input', () => {
   const formData = new FormData(noteForm);
-  checkInputs(formData);
+  isFormValid(formData);
 });
 
 closeButton.addEventListener('click', closePopup);
