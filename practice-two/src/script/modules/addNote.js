@@ -1,6 +1,8 @@
 /* global document */
 import httpUtils from '../utils/httpUtils';
 import { renderAllNotes } from './getAndFilterNote';
+import { isFormValid } from './validation';
+import { setNoteCategory } from './setNoteCategory';
 
 const noteTitleInput = document.getElementById('note-has-title');
 const noteDescriptionInput = document.getElementById('note-has-description');
@@ -11,22 +13,20 @@ const discardButton = document.querySelector('.modal-footer .btn-danger');
 const saveButton = document.getElementById('btn-n-save');
 const noteForm = document.getElementById('addnotesmodalTitle');
 
-const titleError = document.getElementById('title-error');
-const descriptionError = document.getElementById('description-error');
-
 const categoryBusinessCheckbox = document.getElementById('category-business');
 const categorySocialCheckbox = document.getElementById('category-social');
 const categoryTravelCheckbox = document.getElementById('category-travel');
 
-categoryBusinessCheckbox.addEventListener('click', checkbox);
-categorySocialCheckbox.addEventListener('click', checkbox);
-categoryTravelCheckbox.addEventListener('click', checkbox);
+categoryBusinessCheckbox.addEventListener('click', setNoteCategory);
+categorySocialCheckbox.addEventListener('click', setNoteCategory);
+categoryTravelCheckbox.addEventListener('click', setNoteCategory);
 
 async function addNoteAndRender() {
-  const title = noteTitleInput.value.trim();
-  const description = noteDescriptionInput.value.trim();
+  const formData = new FormData(noteForm);
+  const title = formData.get('title').trim();
+  const description = formData.get('description').trim();
 
-  if (title && description && selectedCategory) {
+  if (isFormValid(formData)) {
     let category = '';
 
     switch (selectedCategory) {
@@ -60,72 +60,11 @@ async function addNoteAndRender() {
   }
 }
 
-function checkInputs() {
-  const title = noteTitleInput.value.trim();
-  const description = noteDescriptionInput.value.trim();
-
-  let isValid = true;
-
-  if (!title) {
-    titleError.textContent = 'Title is required';
-    titleError.style.display = 'block';
-    noteTitleInput.classList.add('error-input');
-    isValid = false;
-  } else if (title.length > 20) {
-    titleError.textContent = 'Title cannot be longer than 20 characters';
-    titleError.style.display = 'block';
-    noteTitleInput.classList.add('error-input');
-    isValid = false;
-  } else {
-    titleError.style.display = 'none';
-    noteTitleInput.classList.remove('error-input');
-  }
-
-  if (!description) {
-    descriptionError.textContent = 'Description is required';
-    descriptionError.style.display = 'block';
-    noteDescriptionInput.classList.add('error-input');
-    isValid = false;
-  } else {
-    descriptionError.style.display = 'none';
-    noteDescriptionInput.classList.remove('error-input');
-  }
-
-  if (!selectedCategory) {
-    isValid = false;
-  }
-
-  if (isValid) {
-    addButton.removeAttribute('disabled');
-  } else {
-    addButton.setAttribute('disabled', 'disabled');
-  }
-}
-
-let selectedCategory = null;
-
-function checkbox(event) {
-  const checkbox = event.target;
-  const categoryId = checkbox.id;
-
-  if (checkbox.checked) {
-    if (selectedCategory && selectedCategory !== categoryId) {
-      const prevCheckbox = document.getElementById(selectedCategory);
-      if (prevCheckbox) {
-        prevCheckbox.checked = false;
-      }
-    }
-    selectedCategory = categoryId;
-  } else {
-    selectedCategory = null;
-  }
-}
-
 function closePopup() {
   const modal = document.getElementById('addnotesmodal');
   modal.style.display = 'none';
   noteForm.reset();
-  selectedCategory = null;
+  setSelectedCategory(null);
 }
 
 addButton.addEventListener('click', addNoteAndRender);
@@ -138,12 +77,18 @@ if (addNotesButton) {
       saveButton.style.display = 'none';
     }
     noteForm.reset();
-    selectedCategory = null;
+    setSelectedCategory(null);
   });
 }
 
-noteTitleInput.addEventListener('input', checkInputs);
-noteDescriptionInput.addEventListener('input', checkInputs);
+noteTitleInput.addEventListener('input', () => {
+  const formData = new FormData(noteForm);
+  isFormValid(formData);
+});
+noteDescriptionInput.addEventListener('input', () => {
+  const formData = new FormData(noteForm);
+  isFormValid(formData);
+});
 
 closeButton.addEventListener('click', closePopup);
 discardButton.addEventListener('click', closePopup);

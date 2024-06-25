@@ -5,6 +5,3 @@ import { handleDelete } from './modules/deleteNotes.js';
 import { editNote } from './modules/editNote.js';
 
 filterNotes('all-notes');
-addNoteAndRender();
-favoriteNote();
-editNote();
