@@ -19,18 +19,18 @@ jobs:
         with:
           node-version: '20'
 
-      - name: Install PNPM
-        working-directory: practice-two
-        run: npm install -g pnpm
+      - name: Install NPM
+        working-directory: final-practice
+        run: npm install 
 
       - name: Install dependencies
-        working-directory: practice-two
-        run: pnpm install --frozen-lockfile
+        working-directory: final-practice
+        run: npm install --frozen-lockfile
 
       - name: Build
-        working-directory: practice-two
-        run: pnpm build  # Adjust this command based on your project setup
+        working-directory: final-practice
+        run: npm build  # Adjust this command based on your project setup
 
       - name: Deploy to Vercel
-        working-directory: practice-two
+        working-directory: final-practice
         run: npx vercel --prod --token ${{ secrets.VERCEL_TOKEN }}
