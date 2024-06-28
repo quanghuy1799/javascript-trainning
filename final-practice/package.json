@@ -8,7 +8,7 @@
     "start": "parcel ./src/index.html ",
     "build": "parcel build ./src/index.html  --dist-dir ./dist",
     "format": "prettier --write \"src/**/*.{js,jsx,ts,tsx,json,css,scss,md}\"",
-    "prepare": "husky install",
+    "prepare": "husky",
     "lint": "eslint ."
   },
   "keywords": [],
@@ -29,8 +29,9 @@
   },
   "lint-staged": {
     "src/**/*.{js,jsx,ts,tsx,json,css,scss,md}": [
-      "prettier --write",
-      "git add"
+      "npm run lint",
+      "npm run format",
+      "git add ."
     ]
   }
 }
