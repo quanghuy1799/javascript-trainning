@@ -57,8 +57,9 @@ body {
   height: 13px;
 }
 
-.handle-checkbox {
-  display: flex;
-  flex-direction: row-reverse;
-  justify-content: start;
+.handle-checkbox .error {
+  color: #ff3860;
+  font-size: 9px;
+  height: 13px;
 }
+
