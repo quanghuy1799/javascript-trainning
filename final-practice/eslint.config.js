@@ -1,20 +1,14 @@
-module.exports = {
-  env: {
-    browser: true,
-    es2021: true,
-    node: true,
+import js from "@eslint/js";
+import eslintConfigPrettier from "eslint-config-prettier";
+
+export default [
+  js.configs.recommended,
+  {
+    rules: {
+      "no-unused-vars": "warn",
+      "no-undef": "error",
+      "no-alert": "disable",
+    },
   },
-  extends: [
-    'eslint:recommended',
-    'plugin:prettier/recommended', 
-  ],
-  parserOptions: {
-    ecmaVersion: 12,
-    sourceType: 'module',
-  },
-  rules: {
-    'no-console': 'warn', 
-    'no-debugger': 'warn',
-    'no-extra-parens': 'error'
-  }
-}
+  eslintConfigPrettier,
+];
