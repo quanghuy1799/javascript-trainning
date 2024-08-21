@@ -43,23 +43,16 @@ body {
   outline: 0;
 }
 
-.input-control.success input {
-  border-color: #09c372;
+.input-control input.error {
+  border: 2px solid red;
 }
 
-.input-control.error input {
-  border-color: #ff3860;
+.input-control input.valid {
+  border: 2px solid green;
 }
 
 .input-control .error {
-  color: #ff3860;
-  font-size: 9px;
-  height: 13px;
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
 }
-
-.handle-checkbox .error {
-  color: #ff3860;
-  font-size: 9px;
-  height: 13px;
-}
-

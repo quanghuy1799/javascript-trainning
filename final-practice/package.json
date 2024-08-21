@@ -31,5 +31,8 @@
       "prettier --write",
       "git add"
     ]
+  },
+  "dependencies": {
+    "parcel": "^2.12.0"
   }
 }
