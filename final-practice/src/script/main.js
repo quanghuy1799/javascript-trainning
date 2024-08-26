@@ -31,6 +31,9 @@ document.addEventListener('DOMContentLoaded', function () {
         if (value === '') {
           errorMessage = `${input.name} cannot be empty.`;
           isValid = false;
+        } else if (value.length < 3) {
+          errorMessage = `${input.name} must be at least 3 characters long.`;
+          isValid = false;
         }
         break;
 
