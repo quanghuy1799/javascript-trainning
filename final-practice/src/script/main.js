@@ -21,9 +21,8 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 
   function validateInput(input) {
-    const errorDiv = input.nextElementSibling;
-    let errorMessage = '';
     const value = input.value.trim();
+    let errorMessage = '';
     let isValid = true;
 
     switch (input.id) {
@@ -59,11 +58,9 @@ document.addEventListener('DOMContentLoaded', function () {
         break;
 
       case 'password':
-        const passwordPattern =
-          /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
+        const passwordPattern = /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/;
         if (!passwordPattern.test(value)) {
-          errorMessage =
-            'Password must be at least 6 characters long, include one uppercase letter, one number, and one special character.';
+          errorMessage = 'Password must be at least 6 characters long, include one uppercase letter, one number, and one special character.';
           isValid = false;
         }
         break;
@@ -87,6 +84,12 @@ document.addEventListener('DOMContentLoaded', function () {
         break;
     }
 
+    setValidationState(input, isValid, errorMessage);
+    return isValid;
+  }
+
+  function setValidationState(input, isValid, errorMessage) {
+    const errorDiv = input.nextElementSibling;
     if (!isValid) {
       errorDiv.textContent = errorMessage;
       input.classList.add('error');
@@ -96,7 +99,5 @@ document.addEventListener('DOMContentLoaded', function () {
       input.classList.remove('error');
       input.classList.add('valid');
     }
-
-    return isValid;
   }
 });
